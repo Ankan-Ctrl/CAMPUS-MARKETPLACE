@@ -1,0 +1,11 @@
+.help-fab { position: fixed; right: 24px; bottom: 24px; z-index: 60; }
+.help-fab-inner { position: relative; display: flex; justify-content: center; align-items: center; }
+.help-fab-tooltip { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-300%) skewY(20deg); opacity: 0; transition: all .5s ease; filter: drop-shadow(0 4px 10px rgba(32,48,28,.18)); }
+.help-fab:hover .help-fab-tooltip { opacity: 1; transform: translateX(-50%) translateY(-150%) skewY(0deg); transition-delay: .4s; }
+.help-fab-tooltip-body { background-color: #BCC6E4; display: flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: 8px; white-space: nowrap; color: #20301C; font-size: 13px; font-weight: 600; }
+.help-fab-tooltip-arrow { background-color: #BCC6E4; position: absolute; bottom: 0; left: 50%; transform: translateY(50%) translateX(-50%) rotate(45deg); width: 10px; height: 10px; border-radius: 2px; }
+.help-fab-btn { box-shadow: 0 6px 16px rgba(32,48,28,.18); display: flex; align-items: center; gap: 0; background: linear-gradient(135deg, #5F7A1F, #48590F); color: #F7F6EE; padding: 14px; border-radius: 999px; cursor: pointer; transition: gap .3s ease, transform .2s ease; }
+.help-fab-btn:hover { gap: 8px; transform: translateY(-2px); }
+.help-fab-btn-label { font-size: 0; font-weight: 600; white-space: nowrap; transition: font-size .3s ease; }
+.help-fab-btn:hover .help-fab-btn-label { font-size: 13px; }
+@media (prefers-reduced-motion: reduce) { .help-fab-tooltip, .help-fab-btn, .help-fab-btn-label { transition: none; } }

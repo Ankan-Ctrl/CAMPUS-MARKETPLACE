@@ -1,0 +1,11 @@
+.icon-tooltip-wrap { position: relative; display: inline-block; }
+.icon-tooltip-wrap .icon-tooltip-bubble { position: absolute; top: -34px; left: 50%; transform: translateX(-50%); color: #fff; padding: 4px 9px; border-radius: 6px; opacity: 0; visibility: hidden; font-size: 11.5px; font-family: 'IBM Plex Mono', monospace; white-space: nowrap; transition: all .25s ease; pointer-events: none; z-index: 20; }
+.icon-tooltip-wrap:hover .icon-tooltip-bubble { opacity: 1; visibility: visible; top: -40px; }
+.icon-tooltip-wrap .icon-tooltip-btn { position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; width: 34px; height: 34px; border-radius: 8px; color: #20301C; background-color: transparent; transition: color .3s ease-in-out; }
+.icon-tooltip-wrap .icon-tooltip-btn svg { position: relative; z-index: 1; }
+.icon-tooltip-wrap .icon-tooltip-btn:hover { color: #F7F6EE; }
+.icon-tooltip-wrap .icon-tooltip-fill { position: absolute; top: auto; bottom: 0; left: 0; width: 100%; height: 0; transition: height .3s ease-in-out; }
+.icon-tooltip-wrap .icon-tooltip-btn:hover .icon-tooltip-fill { height: 100%; }
+.icon-tooltip-wrap[data-tone='accent'] .icon-tooltip-fill, .icon-tooltip-wrap[data-tone='accent'] .icon-tooltip-bubble { background-color: #5f7a1f; }
+.icon-tooltip-wrap[data-tone='ink'] .icon-tooltip-fill, .icon-tooltip-wrap[data-tone='ink'] .icon-tooltip-bubble { background-color: #20301c; }
+.icon-tooltip-wrap[data-tone='danger'] .icon-tooltip-fill, .icon-tooltip-wrap[data-tone='danger'] .icon-tooltip-bubble { background-color: #a8412e; }
