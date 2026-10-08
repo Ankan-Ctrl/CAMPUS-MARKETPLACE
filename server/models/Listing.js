@@ -41,7 +41,7 @@ const listingSchema = new mongoose.Schema(
       maxlength: 30,
     },
 
-    // User who created the listing
+    // Every user can be a seller.
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -53,6 +53,21 @@ const listingSchema = new mongoose.Schema(
       type: String,
       default: "",
       maxlength: 2000,
+    },
+
+    // Listing availability
+    // active = available
+    // sold = sold offline
+    status: {
+      type: String,
+      enum: ["active", "sold"],
+      default: "active",
+    },
+
+    // Date/time when the seller marked the listing as sold
+    soldAt: {
+      type: Date,
+      default: null,
     },
   },
   {
