@@ -131,19 +131,68 @@ app.get("/", (req, res) => {
 });
 
 
-// ===============================
+// ---------------------------------------------------------
 // MONGODB CONNECTION
-// ===============================
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
+// ---------------------------------------------------------
+// Vercel can create/reuse serverless function instances.
+// We keep track of the connection so that we don't create
+// unnecessary MongoDB connections on every request.
+
+let mongoConnection = null;
+
+async function connectToMongoDB() {
+  // If MongoDB is already connected, use the existing connection.
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  // If a connection attempt is already in progress,
+  // wait for that same connection instead of creating another one.
+  if (!mongoConnection) {
+    mongoConnection = mongoose.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 10000,
+    });
+  }
+
+  try {
+    await mongoConnection;
+
     console.log("MongoDB connected successfully");
-  })
-  .catch((error) => {
+  } catch (error) {
+    // Clear the failed connection so the next request
+    // can try connecting to MongoDB again.
+    mongoConnection = null;
+
     console.error(
       "MongoDB connection failed:",
       error.message
     );
-  });
 
+    throw error;
+  }
+}
+
+
+// ---------------------------------------------------------
+// DATABASE CONNECTION MIDDLEWARE
+// ---------------------------------------------------------
+// Every API request waits for MongoDB before reaching
+// the authentication routes.
+//
+// This prevents errors such as:
+// "Operation users.findOne() buffering timed out"
+
+app.use(async (req, res, next) => {
+  try {
+    await connectToMongoDB();
+    next();
+  } catch (error) {
+    res.status(500).json({
+      message: "Database connection failed",
+    });
+  }
+});
+
+
+// Export the Express application for Vercel.
 module.exports = app;
