@@ -1,7 +1,6 @@
 import { mockApi } from "./mockApi.js";
 
-const API_URL = "http://localhost:5000/api";
-
+const API_URL = "https://campus-marketplace-api.vercel.app/api";
 async function request(endpoint, options = {}) {
   const response = await fetch(`${API_URL}${endpoint}`, {
     headers: {
