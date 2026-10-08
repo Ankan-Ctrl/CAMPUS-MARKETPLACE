@@ -2,11 +2,12 @@ const mongoose = require("mongoose");
 
 const listingSchema = new mongoose.Schema(
   {
-    // Product/listing title
+    // Listing title
     title: {
       type: String,
       required: true,
       trim: true,
+      maxlength: 100,
     },
 
     // Detailed description of the item
@@ -14,6 +15,7 @@ const listingSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      maxlength: 1000,
     },
 
     // Selling price
@@ -28,6 +30,7 @@ const listingSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      maxlength: 50,
     },
 
     // Condition of the item
@@ -35,9 +38,10 @@ const listingSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      maxlength: 30,
     },
 
-    // Reference to the user who created the listing
+    // User who created the listing
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -48,10 +52,10 @@ const listingSchema = new mongoose.Schema(
     image: {
       type: String,
       default: "",
+      maxlength: 2000,
     },
   },
   {
-    // Automatically creates createdAt and updatedAt
     timestamps: true,
   }
 );
