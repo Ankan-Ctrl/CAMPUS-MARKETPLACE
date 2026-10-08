@@ -1,6 +1,7 @@
 import { mockApi } from "./mockApi.js";
 
 const API_URL = "https://campus-marketplace-api.vercel.app/api";
+
 async function request(endpoint, options = {}) {
   const response = await fetch(`${API_URL}${endpoint}`, {
     headers: {
@@ -23,6 +24,7 @@ const realAuthApi = {
   getCurrentUser: () => {
     try {
       const savedUser = localStorage.getItem("campus_marketplace_user");
+
       if (savedUser) {
         const parsedUser = JSON.parse(savedUser);
 
@@ -31,7 +33,7 @@ const realAuthApi = {
         }
       }
     } catch {
-      // Ignore malformed localStorage data and fall back to mock auth state.
+      // Ignore malformed localStorage data
     }
 
     return mockApi.auth.getCurrentUser();
