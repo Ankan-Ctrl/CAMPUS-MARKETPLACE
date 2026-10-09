@@ -1,13 +1,6 @@
 import React from 'react'
-import {
-  Routes,
-  Route,
-  Navigate,
-  Outlet,
-  useLocation,
-} from 'react-router-dom'
-
-import { AppProvider, useApp } from './context/AppContext.jsx'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { AppProvider } from './context/AppContext.jsx'
 import MainLayout from './components/layout/MainLayout.jsx'
 
 import Home from './pages/Home.jsx'
@@ -25,66 +18,25 @@ import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
 import ForgotPassword from './pages/ForgotPassword.jsx'
 
-// Protect marketplace pages
-function ProtectedLayout() {
-  const { isAuthenticated } = useApp()
-  const location = useLocation()
-
-  if (!isAuthenticated) {
-    return (
-      <Navigate
-        to="/login"
-        replace
-        state={{ from: location }}
-      />
-    )
-  }
-
-  return <Outlet />
-}
-
-// Redirect logged-in users away from authentication pages
-function PublicOnlyRoute({ children }) {
-  const { isAuthenticated } = useApp()
-
-  if (isAuthenticated) {
-    return <Navigate to="/" replace />
-  }
-
-  return children
-}
-
-function AppRoutes() {
+export default function App() {
   return (
-    <Routes>
-      <Route
-        path="/login"
-        element={
-          <PublicOnlyRoute>
-            <Login />
-          </PublicOnlyRoute>
-        }
-      />
+    <AppProvider>
+      <Routes>
+        <Route
+          path="/login"
+          element={<Login />}
+        />
 
-      <Route
-        path="/register"
-        element={
-          <PublicOnlyRoute>
-            <Register />
-          </PublicOnlyRoute>
-        }
-      />
+        <Route
+          path="/register"
+          element={<Register />}
+        />
 
-      <Route
-        path="/forgot-password"
-        element={
-          <PublicOnlyRoute>
-            <ForgotPassword />
-          </PublicOnlyRoute>
-        }
-      />
+        <Route
+          path="/forgot-password"
+          element={<ForgotPassword />}
+        />
 
-      <Route element={<ProtectedLayout />}>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/browse" element={<Browse />} />
@@ -104,20 +56,12 @@ function AppRoutes() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/purchases" element={<Purchases />} />
         </Route>
-      </Route>
 
-      <Route
-        path="*"
-        element={<Navigate to="/login" replace />}
-      />
-    </Routes>
-  )
-}
-
-export default function App() {
-  return (
-    <AppProvider>
-      <AppRoutes />
+        <Route
+          path="*"
+          element={<Navigate to="/login" replace />}
+        />
+      </Routes>
     </AppProvider>
   )
 }
